@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   print_str.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alamrani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/22 17:24:43 by alamrani          #+#    #+#             */
-/*   Updated: 2025/11/23 18:38:35 by alamrani         ###   ########.fr       */
+/*   Created: 2025/11/22 17:19:56 by alamrani          #+#    #+#             */
+/*   Updated: 2025/11/23 18:10:04 by alamrani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include <unistd.h>
-# include <stddef.h>
-# include <stdlib.h>
-# include <stdarg.h>
-# include <stdio.h>
+int	print_str(char *s)
+{
+	int	count;
 
-int	print_char(char c);
-int	print_str(char *s);
-int	print_nbr(int n);
-int	print_unsigned(unsigned int n);
-int	print_hex(unsigned long n, int uppercase);
-int	print_ptr(void *ptr);
-
-#endif
+	count = 0;
+	if (!s)
+		return (write(1, "(null)", 6));
+	while (*s)
+	{
+		count += print_char(*s);
+		s++;
+	}
+	return (count);
+}

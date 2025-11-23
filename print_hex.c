@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   print_hex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alamrani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/22 17:24:43 by alamrani          #+#    #+#             */
-/*   Updated: 2025/11/23 18:38:35 by alamrani         ###   ########.fr       */
+/*   Created: 2025/11/23 18:12:32 by alamrani          #+#    #+#             */
+/*   Updated: 2025/11/23 18:15:37 by alamrani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include <unistd.h>
-# include <stddef.h>
-# include <stdlib.h>
-# include <stdarg.h>
-# include <stdio.h>
+int	print_hex(unsigned long n, int uppercase)
+{
+	int		count;
+	char	c;
 
-int	print_char(char c);
-int	print_str(char *s);
-int	print_nbr(int n);
-int	print_unsigned(unsigned int n);
-int	print_hex(unsigned long n, int uppercase);
-int	print_ptr(void *ptr);
-
-#endif
+	count = 0;
+	if (n >= 16)
+		count += print_hex(n / 16, uppercase);
+	c = "0123456789abcdef"[n % 16];
+	if (uppercase)
+		c = "0123456789ABCDEF"[n % 16];
+	count += write(1, &c, 1);
+	return (count);
+}

@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   print_nbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alamrani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/22 17:24:43 by alamrani          #+#    #+#             */
-/*   Updated: 2025/11/23 18:38:35 by alamrani         ###   ########.fr       */
+/*   Created: 2025/11/23 17:46:04 by alamrani          #+#    #+#             */
+/*   Updated: 2025/11/23 18:11:06 by alamrani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include <unistd.h>
-# include <stddef.h>
-# include <stdlib.h>
-# include <stdarg.h>
-# include <stdio.h>
+int	print_nbr(int n)
+{
+	long	nb;
+	int		count;
+	char	c;
 
-int	print_char(char c);
-int	print_str(char *s);
-int	print_nbr(int n);
-int	print_unsigned(unsigned int n);
-int	print_hex(unsigned long n, int uppercase);
-int	print_ptr(void *ptr);
-
-#endif
+	nb = n;
+	count = 0;
+	if (nb < 0)
+	{
+		count += write(1, "-", 1);
+		nb = -nb;
+	}
+	if (nb >= 10)
+		count += print_nbr(nb / 10);
+	c = (nb % 10) + '0';
+	count += write(1, &c, 1);
+	return (count);
+}
