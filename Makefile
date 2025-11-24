@@ -14,7 +14,7 @@ NAME = libftprintf.a
 CC = cc 
 CFLAGS = -Wall -Wextra -Werror
 SRC = print_char.c print_str.c print_nbr.c print_hex.c \
-	  print_ptr.c print_unsigned.c ft_printf.c
+	  print_ptr.c print_unsigned.c ft_printf.c 
 OBJ = $(SRC:.c=.o)
 HEADER = ft_printf.h
 ARCHIVE = ar rcs
