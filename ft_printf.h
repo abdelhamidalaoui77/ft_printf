@@ -6,7 +6,7 @@
 /*   By: alamrani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 17:24:43 by alamrani          #+#    #+#             */
-/*   Updated: 2025/11/23 18:38:35 by alamrani         ###   ########.fr       */
+/*   Updated: 2025/11/24 17:33:58 by alamrani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 # define FT_PRINTF_H
 
 # include <unistd.h>
-# include <stddef.h>
-# include <stdlib.h>
 # include <stdarg.h>
-# include <stdio.h>
 
 int	print_char(char c);
 int	print_str(char *s);
@@ -25,5 +22,6 @@ int	print_nbr(int n);
 int	print_unsigned(unsigned int n);
 int	print_hex(unsigned long n, int uppercase);
 int	print_ptr(void *ptr);
+int	ft_printf(const char *str, ...);
 
 #endif

@@ -6,13 +6,44 @@
 /*   By: alamrani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 10:20:44 by alamrani          #+#    #+#             */
-/*   Updated: 2025/11/23 18:22:03 by alamrani         ###   ########.fr       */
+/*   Updated: 2025/11/24 16:41:52 by alamrani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-#include "ft_printf.h"
+static int	print_check(char c, va_list args)
+{
+	int	printed_count;
+
+	printed_count = 0;
+	if (c == 'c')
+		printed_count += print_char(va_arg(args, int));
+	else if (c == 's')
+		printed_count += print_str(va_arg(args, char *));
+	else if (c == 'p')
+		printed_count += print_ptr(va_arg(args, void *));
+	else if (c == 'd' || c == 'i')
+		printed_count += print_nbr(va_arg(args, int));
+	else if (c == 'u')
+		printed_count += print_unsigned(va_arg(args, unsigned int));
+	else if (c == 'x')
+		printed_count += print_hex(va_arg(args, unsigned int), 0);
+	else if (c == 'X')
+		printed_count += print_hex(va_arg(args, unsigned int), 1);
+	else if (c == '%')
+		printed_count += print_char('%');
+	else
+		printed_count += print_char(c);
+	return (printed_count);
+}
+
+static int	is_valid_specifier(char c)
+{
+	return (c == 'c' || c == 's' || c == 'p' || c == 'd'
+		|| c == 'i' || c == 'u' || c == 'x' || c == 'X'
+		|| c == '%');
+}
 
 int	ft_printf(const char *str, ...)
 {
@@ -28,39 +59,15 @@ int	ft_printf(const char *str, ...)
 		if (*str == '%' && *(str + 1))
 		{
 			str++;
-			if (*str == 'c')
-				count += print_char(va_arg(args, int));
-			else if (*str == 's')
-				count += print_str(va_arg(args, char *));
-			else if (*str == 'p')
-				count += print_ptr(va_arg(args, void *));
-			else if (*str == 'd' || *str == 'i')
-				count += print_nbr(va_arg(args, int));
-			else if (*str == 'u')
-				count += print_unsigned(va_arg(args, unsigned int));
-			else if (*str == 'x')
-				count += print_hex(va_arg(args, unsigned int), 0);
-			else if (*str == 'X')
-				count += print_hex(va_arg(args, unsigned int), 1);
-			else if (*str == '%')
-				count += print_char('%');
+			if (is_valid_specifier(*str))
+				count += print_check(*str, args);
 			else
-				count += print_char(*str);
+				count += print_char('%');
 		}
-		else
+		else if (*str != '%')
 			count += print_char(*str);
 		str++;
 	}
 	va_end(args);
 	return (count);
 }
-/*
-int	main()
-{
-	ft_printf("My name is %s and i am %d years old.\n","Abdelhamid", 24);
-	char *s = "none";
-	unsigned int x = 71477036;
-	ft_printf("%s\n",s);
-	ft_printf("%u\n",x);
-	// printf("My name is %s and i am %d years old.","Abdelhamid", 24);
-}*/
