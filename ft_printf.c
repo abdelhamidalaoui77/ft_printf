@@ -12,6 +12,12 @@
 
 #include "ft_printf.h"
 
+static int	is_zero(char c)
+{
+	if (c == '0')
+		return (1);
+	return (0);
+}
 static int	print_check(char c, va_list args)
 {
 	int	printed_count;
@@ -33,8 +39,6 @@ static int	print_check(char c, va_list args)
 		printed_count += print_hex(va_arg(args, unsigned int), 1);
 	else if (c == '%')
 		printed_count += print_char('%');
-	else
-		printed_count += print_char(c);
 	return (printed_count);
 }
 
@@ -44,7 +48,15 @@ static int	is_valid_specifier(char c)
 		|| c == 'i' || c == 'u' || c == 'x' || c == 'X'
 		|| c == '%');
 }
+static int	write_character_after_percent(char c)
+{
+	int	count;
 
+	count = 0;
+	count += print_char('%');
+	count += print_char(c);
+	return (count);
+}
 int	ft_printf(const char *str, ...)
 {
 	va_list	args;
@@ -61,8 +73,10 @@ int	ft_printf(const char *str, ...)
 			str++;
 			if (is_valid_specifier(*str))
 				count += print_check(*str, args);
+			else if (is_zero(*str))
+				count = count - 1;
 			else
-				count += print_char('%');
+				count += write_character_after_percent(*str);
 		}
 		else if (*str != '%')
 			count += print_char(*str);
