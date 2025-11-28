@@ -6,7 +6,7 @@
 /*   By: alamrani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 10:20:44 by alamrani          #+#    #+#             */
-/*   Updated: 2025/11/24 16:41:52 by alamrani         ###   ########.fr       */
+/*   Updated: 2025/11/27 21:31:58 by alamrani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static int	is_zero(char c)
 		return (1);
 	return (0);
 }
+
 static int	print_check(char c, va_list args)
 {
 	int	printed_count;
@@ -48,6 +49,7 @@ static int	is_valid_specifier(char c)
 		|| c == 'i' || c == 'u' || c == 'x' || c == 'X'
 		|| c == '%');
 }
+
 static int	write_character_after_percent(char c)
 {
 	int	count;
@@ -57,13 +59,14 @@ static int	write_character_after_percent(char c)
 	count += print_char(c);
 	return (count);
 }
+
 int	ft_printf(const char *str, ...)
 {
 	va_list	args;
 	int		count;
 
 	if (!str)
-		return (0);
+		return (-1);
 	count = 0;
 	va_start(args, str);
 	while (*str)
